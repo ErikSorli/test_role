@@ -1,0 +1,17 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for test_role/
+- name: Create new user arista
+  arista.eos.eos_user:
+    name: "{{ arista.user }}"
+    sshkey: "{{ lookup('file', '/home/eriks/.ssh/id_ed25519.pub') }}"
+    state: present
+  when: "'ansible_network_os' == arista.eos.eos"
+
+- name: Create a new user cisco
+  cisco.ios.ios_user:
+    name: "{{cisco.user}}"
+    nopassword: true
+    sshkey: "{{ lookup('file', '/home/eriks/.ssh/id_ed25519.pub') }}"
+    state: present
+  when: "'ansible_network_os' == cisco.ios.ios"
